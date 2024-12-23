@@ -1,9 +1,10 @@
 import { Coffee, CornerRightDown, HeartOff } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Dicas from "./components/Dicas"
 
 function App() {
-  const [dicas, setDicas] = useState([
+  const [dicas, setDicas] = useState(JSON.parse(localStorage.getItem("dicas")) || 
+  [
     {
       id: 1,
       title: "Para onde vou?",
@@ -29,6 +30,10 @@ function App() {
       like: false
     },
   ])
+
+  useEffect(()=>{
+    localStorage.setItem("dicas", JSON.stringify(dicas))
+  }, [dicas])
 
   function onClickLike(taskId) {
     const newDica = dicas.map((dica) => {
